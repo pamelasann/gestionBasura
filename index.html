@@ -15,6 +15,7 @@
     <link href="assets/css/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -91,7 +92,7 @@
 
                             </div>
                             <div class="panel-right pull-right">
-                                <h3>1,457</h3>
+                                <h3 id="plasticCount">1,457</h3>
                                 <strong> Visitas diarias</strong>
                             </div>
                         </div>
@@ -104,7 +105,7 @@
 
                             <div class="panel-right pull-right">
                                 <h3>4,160 </h3>
-                                <strong> No. basura orgánica</strong>
+                                <strong> No. plástico total al día</strong>
 
                             </div>
                         </div>
@@ -117,7 +118,7 @@
                             </div>
                             <div class="panel-right pull-right">
                                 <h3>5,823 </h3>
-                                <strong> No. basura inorgánica </strong>
+                                <strong> No. aluminio total al día</strong>
 
                             </div>
                         </div>
@@ -137,121 +138,179 @@
                     </div>
                 </div>
 
-                <!--
-                <div class="row">
-                    <div class="col-xs-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body easypiechart-panel">
-                                <h4>Customers</h4>
-                                <div class="easypiechart" id="easypiechart-blue" data-percent="82"><span
-                                        class="percent">82%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body easypiechart-panel">
-                                <h4>Sales</h4>
-                                <div class="easypiechart" id="easypiechart-orange" data-percent="55"><span
-                                        class="percent">55%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body easypiechart-panel">
-                                <h4>Profits</h4>
-                                <div class="easypiechart" id="easypiechart-teal" data-percent="84"><span
-                                        class="percent">84%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-body easypiechart-panel">
-                                <h4>No. of Visits</h4>
-                                <div class="easypiechart" id="easypiechart-red" data-percent="46"><span
-                                        class="percent">46%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            -->
-
-
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Line Chart
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-line-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-9 col-sm-12 col-xs-12" style="display: none;">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Bar Chart Example
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-bar-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12" style="display: none;">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Donut Chart Example
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12" style="display: none;">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Area Chart
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-area-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel-body">
                             <p>
-                                A continuación, ofrece un resumen integral de la actividad y el impacto de los
-                                dispositivos de gestión de residuos. Se presenta la
-                                información clave sobre el rendimiento de los dispositivos como: el
-                                recuento diario de usuarios, el total de visitas
-                                acumuladas desde su instalación y la cantidad total de residuos
-                                orgánicos e inorgánicos clasificados por los dispositivos.
+                                Gráfica de predicción de la cantidad (en kg) de plástico y aluminio recolectado por día.
                             </p>
                         </div>
                     </div>
                 </div>
 
+                <div style="width: 1100px; height:200px;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <canvas id="myChart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <canvas id="myChart2" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
 
-                <footer>
-                    <p>All right reserved. Template by: <a href="http://webthemez.com">WebThemez</a></p>
-                </footer>
+
+                <script>
+                    // Example data
+                    const labels = ['Lunes 1', 'Martes 2', 'Miercoles 3', 'Jueves 4', 'Viernes 5', 'Sabado 6', 'Domingo 7'];
+                    const data1 = [8, 12, 14, 13, 14, 9, 6]; // plástico
+                    const data2 = [5, 8, 7, 8, 10, 8, 3]; // aluminio
+
+                    // Function to perform linear regression and predict values
+                    function predict(data) {
+                        const n = data.length;
+                        let sumX = 0, sumY = 0, sumXX = 0, sumXY = 0, sumXXX = 0, sumXXXX = 0, sumXXY = 0, sumYY = 0;
+
+
+                        for (let i = 0; i < n; i++) {
+                            sumX += i;
+                            sumY += data[i];
+                            sumXY += i * data[i];
+                            sumXX += i * i;
+                            sumXXY += i * i * data[i];
+                            sumXXX += i * i * i;
+                            sumXXXX += i * i * i * i;
+                            sumYY += data[i] * data[i];
+                        }
+
+                        //const a = (((n * sumXXY) - (sumXX * sumY)) * ((n * sumXX) - (sumX * sumX)) - ((n * sumXY) - (sumX * sumY)) * ((n * sumXXX) - (sumXX * sumX))) / (((n * sumXXXX) - (sumXX * sumXX)) * ((n * sumXX) - (sumX * sumX)) - ((n * sumXXX) - sumXX * sumX * sumX));
+                        const a = -0.7857;
+                        const b = 5.8571;
+                        const c = 3.1429;
+
+                        const predictedValues = [];
+                        for (let i = 1; i < 8; i++) {
+                            predictedValues.push((a * i * i) + (b * i) + c);
+                        }
+
+                        return predictedValues;
+                    }
+                    function predict2(data) {
+
+                        const a = -0.5119;
+                        const b = 3.9881;
+                        const c = 1.2857;
+
+                        const predictedValues = [];
+                        for (let i = 1; i < 8; i++) {
+                            predictedValues.push((a * i * i) + (b * i) + c);
+                        }
+
+                        return predictedValues;
+                    }
+
+                    // Get predicted values for data1 and data2
+                    const predictedData1 = predict(data1);
+                    const predictedData2 = predict2(data2);
+
+                    // Create a Chart.js instance with datasets and predictions
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: [...labels], // Include future labels for predictions
+                            datasets: [
+                                {
+                                    label: 'Aluminio',
+                                    data: [...data1, NaN, NaN, NaN], // Include NaN for future predictions to create space
+                                    borderColor: '#2252E6',
+                                    fill: false,
+                                },
+                                {
+                                    label: 'Plastico',
+                                    data: [...data2, NaN, NaN, NaN], // Include NaN for future predictions to create space
+                                    borderColor: '#22D4E6',
+                                    fill: false,
+                                },
+
+                            ],
+                        },
+                        options: {
+                            plugins: {
+                                title: {
+                                    text: 'Gráfica de plástico y aluminio total por día - Promedio anterior',
+                                    display: true
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'kg/dia'
+                                    },
+                                    suggestedMin: 0,
+                                    suggestedMax: 18,
+                                    display: true,
+                                },
+                                x: {
+                                    display: true,
+                                    text: 'x'
+                                }
+                            },
+                        },
+
+                    });
+
+
+                    // Create a Chart.js instance for predicted values
+                    const ctx2 = document.getElementById('myChart2').getContext('2d');
+                    const myChart2 = new Chart(ctx2, {
+                        type: 'line',
+                        data: {
+                            labels: ['Lunes 8', 'Martes 9', 'Miercoles 10', 'Jueves 11', 'Viernes 12', 'Sabado 13', 'Domingo 14'],
+                            datasets: [
+                                {
+                                    label: 'Predicción Aluminio',
+                                    data: predictedData1,
+                                    borderColor: '#2252E6',
+                                    fill: false,
+                                    borderDash: [5, 5],
+                                },
+                                {
+                                    label: 'Predicción Plastico',
+                                    data: predictedData2,
+                                    borderColor: '#22D4E6',
+                                    fill: false,
+                                    borderDash: [5, 5],
+                                },
+                            ],
+                        },
+                        options: {
+                            plugins: {
+                                title: {
+                                    text: 'Gráfica de plástico y aluminio total por día - Predicciones',
+                                    display: true
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'kg/dia'
+                                    },
+                                    suggestedMin: 0,
+                                    suggestedMax: 18,
+                                    display: true,
+                                },
+                                x: {
+                                    display: true,
+                                    text: 'Días'
+                                }
+                            },
+                        },
+                    });
+                </script>
+
             </div>
             <!-- /. PAGE INNER  -->
         </div>
@@ -278,6 +337,44 @@
     <!-- Custom Js -->
     <script src="assets/js/custom-scripts.js"></script>
 
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhWpCtFYBXH173cojXyzXWw2nx9UzSTAI",
+            authDomain: "basura-ce6a8.firebaseapp.com",
+            databaseURL: "https://basura-ce6a8-default-rtdb.firebaseio.com",
+            projectId: "basura-ce6a8",
+            storageBucket: "basura-ce6a8.appspot.com",
+            messagingSenderId: "1057120824817",
+            appId: "1:1057120824817:web:e6d93aee85900eca1ee850",
+            measurementId: "G-4KTLZLS80Q"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        console.log("sdfadf");
+
+        // Reference to the element you want to update
+        const plasticCountElement = document.getElementById('plasticCount');
+
+        // Function to update the HTML element with Firebase data
+        function updatePlasticCount() {
+            const plasticCountRef = database.ref('clasificacion'); // Replace with your Firebase path
+
+            plasticCountRef.on('aluminio', (snapshot) => {
+                const count = snapshot.val();
+                // Update the HTML element with the fetched count from Firebase
+                plasticCountElement.textContent = count;
+            });
+        }
+        console.log("34234");
+
+        // Call the function to initially update the element
+        updatePlasticCount();
+    </script>
 
 </body>
 
