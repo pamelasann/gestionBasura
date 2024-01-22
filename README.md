@@ -12,6 +12,7 @@ El proyecto consta de un dispositivo de gestión de residuos con capacidad de di
 <img src="images/esquema.png" width=350 height=200>
 <img src="images/prototipo.png" width=350 height=200>
 
+
 ### Sitio Web:
 
 - Control centralizado a través de un sitio web para gestionar múltiples dispositivos.
@@ -19,9 +20,15 @@ El proyecto consta de un dispositivo de gestión de residuos con capacidad de di
 - Funcionalidades de alerta para notificar problemas o mal funcionamiento de los dispositivos.
 - Predicción de uso para un mejor manejo de su disposición.
 
-<img src="images/home.png" width=750 height=400>
-<img src="images/graph.png" width=750 height=400>
-<img src="images/map.png" width=750 height=400>
-<img src="images/colect.png" width=750 height=400>
-<img src="images/resume.png" width=750 height=400>
-<img src="images/info.png" width=750 height=400>
+<img src="images/home.png" width=650 height=350>
+<img src="images/graph.png" width=650 height=350>
+<img src="images/map.png" width=650 height=350>
+<img src="images/colect.png" width=650 height=350>
+<img src="images/resume.png" width=650 height=350>
+<img src="images/info.png" width=650 height=350>
+
+### Acknowledgements:
+- Este proyecto se realizó con la ayuda de Darío, Andrés, Monica, Víctor y Leonardo :D
+
+
+
