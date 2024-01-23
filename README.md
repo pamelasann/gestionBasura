@@ -28,7 +28,7 @@ El proyecto consta de un dispositivo de gestión de residuos con capacidad de di
 <img src="images/info.png" width=650 height=350>
 
 ### Acknowledgements:
-- Este proyecto se realizó con la ayuda de Darío, Andrés, Monica, Víctor y Leonardo :D
+- Este proyecto se realizó en colaboración de Darío, Andrés, Monica, Víctor y Leonardo :D
 
 
 
